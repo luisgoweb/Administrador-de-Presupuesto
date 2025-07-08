@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useBudget } from "../hooks/useBudget"
 
 const BudgetForm = () => {
     const [budget, setBudget] = useState(0)
+    const {dispatch} = useBudget()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBudget(e.target.valueAsNumber)
@@ -14,7 +16,7 @@ const BudgetForm = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log('enviando presupuesto de:', budget)
+        dispatch({type: "save-budget", payload: {budget}})
     }
 
   return (
