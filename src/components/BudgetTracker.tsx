@@ -1,3 +1,4 @@
+import AmountDisplay from "./AmountDisplay"
 
 
 const BudgetTracker = () => {
@@ -10,6 +11,18 @@ const BudgetTracker = () => {
             <button type="button" className="bg-pink-600 hover:bg-pink-900 text-white p-2 uppercase cursor-pointer w-full rounded-lg">
                 Reset App
             </button>
+            <AmountDisplay 
+            label="Presupuesto"
+            amount={500}
+            />
+            <AmountDisplay 
+            label="Gastado"
+            amount={300}
+            />
+            <AmountDisplay 
+            label="Disponible"
+            amount={200}
+            />
         </div>
         
     </div>
