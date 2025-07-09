@@ -1,5 +1,6 @@
 import BudgetForm from "./components/BudgetForm"
 import BudgetTracker from "./components/BudgetTracker"
+import ExpenseModal from "./components/ExpenseModal"
 import { useBudget } from "./hooks/useBudget"
 
 function App() {
@@ -16,6 +17,16 @@ function App() {
       <div className="max-w-3xl mx-auto bg-white mt-10 shadow-lg rounded-lg p-10">
           {isValidBudget ? <BudgetTracker /> : <BudgetForm />}
       </div>
+
+      {isValidBudget && (
+        <main className="max-w-3xl mx-auto p-10">
+
+
+           <ExpenseModal />
+        </main>
+      )}
+
+     
     </>
   )
 }
