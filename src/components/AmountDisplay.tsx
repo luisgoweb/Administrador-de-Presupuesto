@@ -1,3 +1,4 @@
+import { formatCurrency } from "../helpers/formatCurrency"
 
 type AmountDisplayProps = {
     amount: number
@@ -6,9 +7,9 @@ type AmountDisplayProps = {
 
 const AmountDisplay = ({amount, label}: AmountDisplayProps) => {
   return (
-    <p>
+    <p className="text-lg">
         {label}: {''}
-        <span className="text-black font-bold">{amount}</span>
+        <span className="text-black font-bold">{ formatCurrency(amount) }</span>
     </p>
   )
 }
