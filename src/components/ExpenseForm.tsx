@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { categories } from "../data/categories"
 import type { DraftExpense } from "../types"
+import ErrorMessage from "./ErrorMessage"
 
 
 const ExpenseForm = () => {
@@ -12,6 +13,7 @@ const ExpenseForm = () => {
         date: ''
     }
     const[expense, setExpense] = useState(initialState)
+    const[error, setError] = useState('')
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const isNumberField = ['amount'].includes(e.target.id)
@@ -21,10 +23,21 @@ const ExpenseForm = () => {
         })
     }
 
-  return (
-    <form className="space-y-3">
-        <legend className="text-2xl uppercase font-bold text-blue-600 text-center border-b-4 border-blue-600">Nuevo Gasto</legend>
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
+        //Validar
+        if(Object.values(expense).includes('')){
+           setError('Todos los campos son obligatorios')
+           return
+        }
+       
+    }
+
+  return (
+    <form className="space-y-3" onSubmit={handleSubmit}>
+        <legend className="text-2xl uppercase font-bold text-blue-600 text-center border-b-4 border-blue-600">Nuevo Gasto</legend>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
         <div className="grid grid-cols-1 gap-2 mt-5">
             <label htmlFor="expenseName">Nombre del Gasto:</label>
             <input 
