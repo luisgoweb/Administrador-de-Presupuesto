@@ -1,7 +1,26 @@
+import { useState } from "react"
 import { categories } from "../data/categories"
+import type { DraftExpense } from "../types"
 
 
 const ExpenseForm = () => {
+
+    const initialState : DraftExpense = {
+        expenseName:'',
+        amount: 0,
+        category: '',
+        date: ''
+    }
+    const[expense, setExpense] = useState(initialState)
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+        const isNumberField = ['amount'].includes(e.target.id)
+        setExpense({
+            ...expense,
+            [e.target.name] : isNumberField ? +e.target.value : e.target.value
+        })
+    }
+
   return (
     <form className="space-y-3">
         <legend className="text-2xl uppercase font-bold text-blue-600 text-center border-b-4 border-blue-600">Nuevo Gasto</legend>
@@ -14,6 +33,8 @@ const ExpenseForm = () => {
             type="text"
             placeholder="Escribe el nombre del gasto"
             name="expenseName"
+            value={expense.expenseName}
+            onChange={handleChange}
             />
         </div>
 
@@ -25,6 +46,8 @@ const ExpenseForm = () => {
             type="number"
             placeholder="Ej. 300 o 500"
             name="amount"
+            value={expense.amount}
+            onChange={handleChange}
             />
         </div>
 
@@ -34,6 +57,8 @@ const ExpenseForm = () => {
             id="category"
             name="category"
             className="w-full border border-slate-300 p-2 rounded-lg"
+            value={expense.category}
+            onChange={handleChange}
             > 
                 <option value="">-- Seleccione --</option>
                 {categories.map(category => (
@@ -51,6 +76,8 @@ const ExpenseForm = () => {
             className="w-full border border-slate-300 p-2 rounded-lg"
             type="date"
             name="date"
+            value={expense.date}
+            onChange={handleChange}
             />
         </div>
 
