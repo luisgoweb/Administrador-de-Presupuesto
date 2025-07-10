@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { categories } from "../data/categories"
+import { useBudget } from "../hooks/useBudget"
 import type { DraftExpense } from "../types"
 import ErrorMessage from "./ErrorMessage"
 
@@ -14,6 +15,7 @@ const ExpenseForm = () => {
     }
     const[expense, setExpense] = useState(initialState)
     const[error, setError] = useState('')
+    const {dispatch} = useBudget()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const isNumberField = ['amount'].includes(e.target.id)
@@ -31,6 +33,8 @@ const ExpenseForm = () => {
            setError('Todos los campos son obligatorios')
            return
         }
+
+        dispatch({type: 'add-expense', payload: {expense}})
        
     }
 
