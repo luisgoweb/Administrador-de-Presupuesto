@@ -42,13 +42,23 @@ const ExpenseForm = () => {
            return
         }
 
-        dispatch({type: 'add-expense', payload: {expense}})
+        //Agregar o Actualizar gasto
+        if(state.editingId){
+            dispatch({type: 'update-expense', payload: {expense: {id: state.editingId, ...expense}}})
+        }else{
+            dispatch({type: 'add-expense', payload: {expense}})
+        }
+        
        
     }
 
   return (
     <form className="space-y-3" onSubmit={handleSubmit}>
-        <legend className="text-2xl uppercase font-bold text-blue-600 text-center border-b-4 border-blue-600">Nuevo Gasto</legend>
+        <legend 
+        className="text-2xl uppercase font-bold text-blue-600 text-center border-b-4 border-blue-600"
+        >
+            {state.editingId ? 'Actualizar Gasto' : 'Nuevo Gasto'}
+        </legend>
             {error && <ErrorMessage>{error}</ErrorMessage>}
         <div className="grid grid-cols-1 gap-2 mt-5">
             <label htmlFor="expenseName">Nombre del Gasto:</label>
