@@ -8,6 +8,7 @@ import {
 } from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
 import { categories } from "../data/categories";
+import { useBudget } from "../hooks/useBudget";
 import type { Expense } from "../types";
 import AmountDisplay from "./AmountDisplay";
 
@@ -17,12 +18,14 @@ type ExpenseDetailProps = {
 
 const ExpenseDetail = ({expense} : ExpenseDetailProps) => {
 
+    const {dispatch} = useBudget()
+
     const categoryInfo = useMemo(() => categories.filter(category => category.id === expense.category)[0],[expense])
 
     const leadingActions = () => (
         <LeadingActions>
             <SwipeAction 
-            onClick={()=> {}}
+            onClick={()=> dispatch({type: 'get-expense-by-id', payload: {id: expense.id}})}
             >
                 Actualizar
             </SwipeAction>
@@ -32,7 +35,7 @@ const ExpenseDetail = ({expense} : ExpenseDetailProps) => {
     const trailingActions = () => (
         <TrailingActions>
             <SwipeAction 
-            onClick={()=> {}}
+            onClick={()=> dispatch({type: 'delete-expense', payload: {id: expense.id}})}
             destructive={true}
             >
                 Eliminar

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { categories } from "../data/categories"
 import { useBudget } from "../hooks/useBudget"
 import type { DraftExpense } from "../types"
@@ -15,7 +15,15 @@ const ExpenseForm = () => {
     }
     const[expense, setExpense] = useState(initialState)
     const[error, setError] = useState('')
-    const {dispatch} = useBudget()
+    const {state, dispatch} = useBudget()
+
+    useEffect(()=> {
+        if(state.editingId){
+            const editingExpense = () => state.expenses.filter(expense => expense.id === state.editingId)[0]
+            setExpense(editingExpense)
+        }
+       
+    },[state.editingId])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const isNumberField = ['amount'].includes(e.target.id)
