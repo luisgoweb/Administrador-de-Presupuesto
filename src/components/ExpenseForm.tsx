@@ -15,15 +15,19 @@ const ExpenseForm = () => {
     }
     const[expense, setExpense] = useState(initialState)
     const[error, setError] = useState('')
-    const {state, dispatch} = useBudget()
+    const[previousAmount, setPreviousAmount] = useState(0)
+    const {state, dispatch, disponibleExpense} = useBudget()
 
     useEffect(()=> {
         if(state.editingId){
-            const editingExpense = () => state.expenses.filter(expense => expense.id === state.editingId)[0]
+            const editingExpense =  state.expenses.filter(expense => expense.id === state.editingId)[0]
             setExpense(editingExpense)
+            setPreviousAmount(editingExpense.amount)
         }
        
     },[state.editingId])
+
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const isNumberField = ['amount'].includes(e.target.id)
@@ -41,14 +45,28 @@ const ExpenseForm = () => {
            setError('Todos los campos son obligatorios')
            return
         }
-
+        
+        //Validar que no me pase del presupuesto
+        if((expense.amount - previousAmount ) > disponibleExpense){
+            setError('El monto excede el presupuesto')
+            return
+         }
+        
         //Agregar o Actualizar gasto
         if(state.editingId){
             dispatch({type: 'update-expense', payload: {expense: {id: state.editingId, ...expense}}})
         }else{
             dispatch({type: 'add-expense', payload: {expense}})
         }
-        
+
+        //Reiniciar el state
+        setExpense({
+            expenseName:'',
+            amount: 0,
+            category: '',
+            date: ''
+        })
+        setPreviousAmount(0)
        
     }
 
@@ -118,7 +136,7 @@ const ExpenseForm = () => {
 
         <input 
         type="submit"
-        value="Registrar Gasto"
+        value={state.editingId ? 'Actualizar Gasto' : 'Agregar Gasto'}
         className="bg-blue-600 hover:bg-blue-800 text-white cursor-pointer uppercase font-bold rounded-lg w-full p-2"
         />
 
