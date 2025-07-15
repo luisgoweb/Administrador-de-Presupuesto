@@ -3,7 +3,7 @@ import BudgetForm from "./components/BudgetForm"
 import BudgetTracker from "./components/BudgetTracker"
 import ExpenseList from "./components/ExpenseList"
 import ExpenseModal from "./components/ExpenseModal"
-import FilterByCategory from "./components/filterByCategory"
+import FilterByCategory from "./components/FilterByCategory"
 import { useBudget } from "./hooks/useBudget"
 
 function App() {
