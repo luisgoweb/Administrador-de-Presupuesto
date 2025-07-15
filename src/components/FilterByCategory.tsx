@@ -20,7 +20,7 @@ const FilterByCategory = () => {
                 className="border border-slate-300 p-2 rounded-lg"
                 onChange={handleChange}
                 >
-                    <option >--Seleccionar Todos</option>
+                    <option value="" >--Seleccionar Todos</option>
                     {categories.map( category => (
                         <option key={category.id} value={category.id}>
                             {category.name}

@@ -6,7 +6,7 @@ const ExpenseList = () => {
     const { state } = useBudget()
 
     const filteredExpense = state.currencyCategory ? state.expenses.filter( expense => expense.category === state.currencyCategory) : state.expenses
-    const isEmpty = useMemo(() => filteredExpense.length === 0,[state.currencyCategory])
+    const isEmpty = useMemo(() => filteredExpense.length === 0,[filteredExpense])
 
   return (
     <div className="mt-10 bg-white shadow-lg p-5 rounded-lg">
